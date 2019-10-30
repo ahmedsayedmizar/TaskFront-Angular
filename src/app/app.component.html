@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <div class="panel-title">
+        <h3 class="text-center">Phone Book</h3>
+
+      </div>
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="form-group has-info has-feedback">
+          <label for="seacrh" class="col-sm-2 control-label">Search: </label>
+          <div class="col-sm-5">
+            <input type="text" name="search" class="form-control" [(ngModel)]="searchItem">
+            <button *ngIf="!searchMode" class="glyphicon glyphicon-search "  (click)="search(searchItem)"></button>
+            <button class="glyphicon glyphicon-remove " *ngIf="searchMode" (click)="getUsers()"></button>
+
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive" *ngIf="this.allData?.length > 0">
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Contacts</th>
+              <th>Phone Number</th>
+              <th>Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of allData ">
+
+              <td ><span *ngIf="editId!== data.id">{{data.name}}</span>
+              <input text="text" class="form-control input-sm" [(ngModel)]="nameEdit"  *ngIf="editId === data.id">
+            </td>
+              <td > <span *ngIf="editId!== data.id">{{data.phone}}</span>
+                <input text="text" class="form-control input-sm" [(ngModel)]="phoneEdit"  *ngIf="editId === data.id">
+              </td>
+              <td><a (click)="delete(data.id)"><span class="glyphicon glyphicon-trash">
+                  </span>&nbsp;</a>
+                </td>
+                <td>
+                <a (click)="edit(data)" *ngIf="editId!== data.id">
+                <span class="glyphicon glyphicon-edit"></span></a>
+              <a (click)="update(data.id,nameEdit,phoneEdit)" *ngIf="editId=== data.id">&nbsp;
+                <span class="glyphicon glyphicon-ok"></span></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <form class="form-inline" [formGroup]="dataGroup">
+        <div class="form-group">
+          <span>Name：</span>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+        <div class="form-group">
+          <span>Tel：</span>
+          <input type="text" class="form-control" formControlName="phone">
+        </div>
+        <input (click)="save()" type="button" class="btn btn-primary btn-sm" value="Add">
+      </form>
+    </div>
+  </div>
+</div>
